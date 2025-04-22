@@ -1,14 +1,20 @@
 import flet as ft
-import Styles
-
+from funcoes import *
 
 def main(page: ft.Page):
     page.title="AcadeGUIA"
     page.vertical_alignment=ft.MainAxisAlignment.CENTER
     page.favicon="assets/favicon.png"
+    page.window.width = 500
+    page.window.height = 800
 
-    card_Opção(
-        
-    )
+    page.fonts = {
+        "Codystar": "fonts/Codystar-Regular.ttf"
+    }
 
-ft.app(view=ft.AppView.FLET_APP, target=main)
+    page.add(app_bar, container, nav_bar)
+    page.theme = ft.Theme(font_family="Codystar")
+    page.bg_color = ft.Colors.GREY
+
+
+ft.app(view=ft.AppView.FLET_APP, target=main, assets_dir="assets")
