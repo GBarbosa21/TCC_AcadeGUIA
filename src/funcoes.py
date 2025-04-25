@@ -36,16 +36,36 @@ container = ft.Container(
     height=600,
     content=ft.Column(
         controls=[
-            ft.Image(src="assets/AcadeGUIA.png", expand=True, width=320, height=640, fit=ft.ImageFit.COVER),
             ft.Container(
                 width=600,
                 height=600,
                 alignment=ft.alignment.center,
                 content=ft.Column(
                     controls=[
-                        ft.ElevatedButton("Treino A", width=200, height=50, on_click=lambda e: print("Treino A")),
-                        ft.ElevatedButton("Treino B", width=200, height=50, on_click=lambda e: print("Treino B")),
-                        ft.ElevatedButton("Treino C", width=200, height=50, on_click=lambda e: print("Treino C")),
+                        ft.Container(
+                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
+                            content=ft.Column(
+                                controls=[
+                                    ft.ElevatedButton("Treino A", width=200, height=60, on_click=lambda e: print("Treino A")),
+                                ]
+                            )
+                        ),
+                        ft.Container(
+                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
+                            content=ft.Column(
+                                controls=[
+                                    ft.ElevatedButton("Treino B", width=200, height=60, on_click=lambda e: print("Treino B")),
+                                ]
+                            )
+                        ),
+                        ft.Container(
+                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
+                            content=ft.Column(
+                                controls=[
+                                    ft.ElevatedButton("Treino C", width=200, height=60, on_click=lambda e: print("Treino C")),
+                                ]
+                            )
+                        ),
                     ]
                 )
             )
