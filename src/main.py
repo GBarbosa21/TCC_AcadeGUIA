@@ -1,20 +1,23 @@
 import flet as ft
 from funcoes import *
+from utils import route_change
+
 
 def main(page: ft.Page):
-    page.title="AcadeGUIA"
-    page.vertical_alignment=ft.MainAxisAlignment.CENTER
-    page.favicon="assets/favicon.png"
-    page.window.width = 500
-    page.window.height = 800
+    page.title = "AcadeGUIA"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.favicon = "assets/favicon.png"
 
     page.fonts = {
-        "Codystar": "fonts/Codystar-Regular.ttf"
+        "RobotoSlab": "https://github.com/google/fonts/raw/main/apache/robotoslab/RobotoSlab%5Bwght%5D.ttf"
     }
 
-    page.add(app_bar, container, nav_bar)
-    page.theme = ft.Theme(font_family="Codystar")
-    page.bg_color = ft.Colors.GREY
+    page.theme = ft.Theme(font_family="RobotoSlab")
+    page.bg_color = ft.Colors.GREY_100  # cor cinza mais clara pra ficar mais bonito
 
+    page.add(container, nav_bar)
+
+    page.on_route_change = lambda e: route_change(page)
+    page.go(page.route)
 
 ft.app(view=ft.AppView.FLET_APP, target=main, assets_dir="assets")

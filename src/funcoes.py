@@ -1,83 +1,80 @@
-from tkinter import Image
-
 import flet as ft
-from PIL.ImageOps import expand, cover
-from docutils.nodes import image
-from docutils.parsers.rst.directives.tables import align
-from pygments.styles.dracula import background
+from setuptools.command.alias import alias
 
 from Styles import *
 
 app_bar = ft.AppBar(
-        leading=ft.Image(src="assets/favicon.png"),
-        leading_width=64,
-        title=ft.Text("Acadeguia"),
-        center_title=True,
-        bgcolor=ft.Colors.LIGHT_BLUE_800,
-        color=ft.Colors.BLACK
-    )
+    leading=ft.Image(src="assets/favicon.png"),
+    leading_width=64,
+    title=ft.Text("Acadeguia"),
+    center_title=True,
+    bgcolor=ft.Colors.LIGHT_BLUE_800,
+    color=ft.Colors.BLACK
+)
 
 nav_bar = ft.NavigationBar(
-        destinations=[
-            ft.NavigationBarDestination(icon=ft.Icons.ARCHIVE, label="Minhas Series"),
-            ft.NavigationBarDestination(icon=ft.Icons.FITNESS_CENTER, label="Exercicios"),
-            ft.NavigationBarDestination(
-                icon=ft.Icons.BOOKMARK_BORDER,
-                selected_icon=ft.Icons.BOOKMARK,
-                label="Exercicios Salvos",
+    destinations=[
+        ft.NavigationBarDestination(icon=ft.Icons.ARCHIVE, label="Minhas Series"),
+        ft.NavigationBarDestination(icon=ft.Icons.HOME, label="Início", ),
+        ft.NavigationBarDestination(icon=ft.Icons.FITNESS_CENTER, label="Exercicios"),
+    ]
+)
+
+container = ft.Container(
+    expand=True,  # 👈 ocupa toda a tela disponível
+    padding=20,
+    alignment=ft.alignment.center,
+    content=ft.Column(
+        spacing=30,
+        alignment=ft.MainAxisAlignment.CENTER,
+        controls=[
+            ft.Container(
+                alignment=ft.alignment.center,
+                expand=True,
+                height=200,
+                padding=ft.Padding(20, 0, 20, 0),
+                content=ft.Image(
+                    src="assets/AcadeGUIA.png",
+                    fit=ft.ImageFit.FIT_WIDTH,  # 👈 imagem se ajusta à largura
+                ),
+            ),
+            ft.Container(
+                alignment=ft.alignment.center,
+                expand=True,
+                content=ft.Column(
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=20,
+                    controls=[
+                        ft.Text(
+                            "Menu Principal",
+                            style=EstiloTxt,
+                            text_align=ft.TextAlign.CENTER,  # 👈 centraliza o texto
+                        ),
+                        ft.ElevatedButton(
+                            "Minhas Séries",
+                            width=500,  # 👈 botão maior para telas grandes
+                            height=60,
+                            icon=ft.Icons.ARCHIVE,
+                            on_click=lambda e: e.page.go("/minhas_series"),
+                        ),
+                        ft.ElevatedButton(
+                            "Exercícios",
+                            width=500,
+                            height=60,
+                            icon=ft.Icons.FITNESS_CENTER,
+                            on_click=lambda e: print("Treino B")
+                        ),
+                        ft.ElevatedButton(
+                            "Exercícios Salvos",
+                            width=500,
+                            height=60,
+                            icon=ft.Icons.BOOKMARK_BORDER,
+                            on_click=lambda e: print("Treino C")
+                        ),
+                    ]
+                ),
             ),
         ]
     )
-
-container = ft.Container(
-    padding= 20,
-    alignment= ft.alignment.center,
-    width= 800,
-    height=600,
-    content=ft.Column(
-        controls=[
-            ft.Container(
-                width=600,
-                height=600,
-                alignment=ft.alignment.center,
-                content=ft.Column(
-                    controls=[
-                        ft.Container(
-                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
-                            content=ft.Column(
-                                controls=[
-                                    ft.ElevatedButton("Treino A", width=200, height=60, on_click=lambda e: print("Treino A")),
-                                ]
-                            )
-                        ),
-                        ft.Container(
-                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
-                            content=ft.Column(
-                                controls=[
-                                    ft.ElevatedButton("Treino B", width=200, height=60, on_click=lambda e: print("Treino B")),
-                                ]
-                            )
-                        ),
-                        ft.Container(
-                            margin=ft.Margin(top=20, bottom=20, left=0, right=0),
-                            content=ft.Column(
-                                controls=[
-                                    ft.ElevatedButton("Treino C", width=200, height=60, on_click=lambda e: print("Treino C")),
-                                ]
-                            )
-                        ),
-                    ]
-                )
-            )
-        ],
-        spacing=30,
-        alignment=ft.MainAxisAlignment.CENTER,
-    ),
-)
-
-btn_exerc_style= ft.ElevatedButton(
-    text="Exercicios",
-    bgcolor=ft.Colors.LIGHT_BLUE_800,
-    color=ft.Colors.BLACK,
-    width= 300,
 )
