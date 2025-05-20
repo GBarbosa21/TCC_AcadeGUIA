@@ -3,6 +3,8 @@ from funcoes import container, nav_bar
 from PIL import Image
 from Styles import EstiloTxt
 
+from views.Minhas_series import minhas_series
+
 
 def route_change(page: ft.Page):
     if page.route == '/':
@@ -15,17 +17,7 @@ def route_change(page: ft.Page):
         )
     elif page.route == '/minhas_series':
         page.views.clear()
-        page.views.append(
-            ft.View(
-                route='/minhas_series',
-                controls=[
-                    nav_bar,
-                    ft.Text('Conteúdo da página de Treino A', style=EstiloTxt),
-                    ft.ElevatedButton(
-                        'Voltar', on_click=lambda e: page.go('/')
-                    ),
-                ],
-            )
-        )
+        page.views.append(minhas_series())
+
 
     page.update()
