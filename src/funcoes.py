@@ -95,7 +95,7 @@ def header_texto(texto: str) -> ft.Container:
             size=28,
             weight=ft.FontWeight.BOLD,
             text_align=ft.TextAlign.CENTER,
-            color=ft.Colors.WHITE
+            color="#F1F1F1"
         )
     )
 
@@ -152,15 +152,60 @@ def layout_com_header_fixado(titulo: str, conteudo: list[ft.Control], nav_bar: f
             ]
         )
 
-def criar_card_serie(nome: str, qtd_exercicios: int):
-    return ft.Container(
-        padding=15,
-        bgcolor=ft.Colors.GREY_800,
-        border_radius=10,
+def criar_card_serie(nome: str, qtd_exercicios: int, on_click=None, on_delete=None):
+    return ft.ElevatedButton(
+        width=300,
+        height=100,
+        style=ft.ButtonStyle(
+            bgcolor=ft.Colors.GREY_900,
+            color="#F1F1F1",
+            shape=ft.RoundedRectangleBorder(radius=12),
+            overlay_color=ft.Colors.GREY_800,
+            padding=ft.Padding(15, 10, 15, 10),
+        ),
+        on_click=on_click,
         content=ft.Column(
+            spacing=5,
             controls=[
-                ft.Text(nome, size=20, weight=ft.FontWeight.BOLD, color="white"),
-                ft.Text(f"{qtd_exercicios} exercícios", color=ft.Colors.GREY_300),
+                ft.Row(
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                    controls=[
+                        ft.Text(nome, size=35, weight=ft.FontWeight.BOLD, theme_style=ft.TextThemeStyle.DISPLAY_LARGE),
+                        ft.IconButton(
+                            icon=ft.icons.DELETE_OUTLINE,
+                            icon_color=ft.Colors.RED_300,
+                            tooltip="Excluir série",
+                            on_click=lambda e: on_delete() if on_delete else None
+                        )
+                    ]
+                ),
+                ft.Row(
+                    alignment=ft.MainAxisAlignment.END,
+                    controls=[
+                        ft.Text(f"{qtd_exercicios} exercícios", size=24, color="#A6A6A6", text_align=ft.TextAlign.RIGHT)
+                    ]
+                )
+            ]
+        )
+    )
+
+def btn_nova_serie(on_click=None):
+    return ft.ElevatedButton(
+        height=100,
+        style=ft.ButtonStyle(
+            bgcolor=ft.Colors.GREY_900,
+            color="#A6A6A6",
+            shape=ft.RoundedRectangleBorder(radius=12),
+            overlay_color=ft.Colors.GREY_800,
+            padding=ft.Padding(15, 10, 15, 10),
+        ),
+        on_click=on_click,
+        content=ft.Row(
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=10,
+            controls=[
+                ft.Icon(name=ft.icons.ADD_BOX_OUTLINED, color="#A6A6A6"),
+                ft.Text("Nova Série", size=20, color="#A6A6A6", weight=ft.FontWeight.BOLD)
             ]
         )
     )
