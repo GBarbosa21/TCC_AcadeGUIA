@@ -1,4 +1,5 @@
 import flet as ft
+from flet.core.margin import Margin
 from setuptools.command.alias import alias
 from Styles import *
 
@@ -62,7 +63,7 @@ container = ft.Container(
                             width=500,  # 👈 botão maior para telas grandes
                             height=60,
                             icon=ft.Icons.ARCHIVE,
-                            on_click=lambda e: e.page.go("/minhas_series")
+                            on_click=lambda e: e.page.go('/minhas_series'),
                         ),
                         ft.ElevatedButton(
                             'Exercícios',
@@ -95,70 +96,77 @@ def header_texto(texto: str) -> ft.Container:
             size=28,
             weight=ft.FontWeight.BOLD,
             text_align=ft.TextAlign.CENTER,
-            color="#F1F1F1"
-        )
+            color='#F1F1F1',
+        ),
     )
+
 
 def botao_nova_serie(on_click_fn):
     return ft.Container(
         alignment=ft.alignment.center,
         padding=ft.Padding(20, 10, 20, 10),
         content=ft.ElevatedButton(
-            text="Nova série",
+            text='Nova série',
             icon=ft.icons.ADD_BOX_OUTLINED,
             width=300,  # 👈 largura mais destacada
             height=50,
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=12),
             ),
-            on_click=on_click_fn
-        )
+            on_click=on_click_fn,
+        ),
     )
 
-def layout_com_header_fixado(titulo: str, conteudo: list[ft.Control], nav_bar: ft.NavigationBar):
-    return ft.View(
-            route=f"/{titulo.lower().replace(' ', '_')}",
-            controls=[
-                ft.Column(
-                    expand=True,
-                    alignment=ft.MainAxisAlignment.START,
-                    controls=[
-                        # Título fixo
-                        ft.Container(
-                            alignment=ft.alignment.top_center,
-                            padding=ft.Padding(0, 20, 0, 10),
-                            content=ft.Text(
-                                titulo,
-                                size=28,
-                                weight=ft.FontWeight.BOLD,
-                                text_align=ft.TextAlign.CENTER,
-                                color=ft.Colors.WHITE
-                            )
-                        ),
-                        # Conteúdo que cresce e rola
-                        ft.Container(
-                            expand=True,
-                            content=ft.ListView(
-                                expand=True,
-                                spacing=10,
-                                padding=20,
-                                controls=conteudo
-                            )
-                        ),
-                        # NAVIGATION BAR no fim (simulada)
-                        nav_bar
-                    ]
-                )
-            ]
-        )
 
-def criar_card_serie(nome: str, qtd_exercicios: int, on_click=None, on_delete=None):
+def layout_com_header_fixado(
+    titulo: str, conteudo: list[ft.Control], nav_bar: ft.NavigationBar
+):
+    return ft.View(
+        route=f"/{titulo.lower().replace(' ', '_')}",
+        controls=[
+            ft.Column(
+                expand=True,
+                alignment=ft.MainAxisAlignment.START,
+                controls=[
+                    # Título fixo
+                    ft.Container(
+                        alignment=ft.alignment.top_center,
+                        padding=ft.Padding(0, 20, 0, 10),
+                        content=ft.Text(
+                            titulo,
+                            size=28,
+                            weight=ft.FontWeight.BOLD,
+                            text_align=ft.TextAlign.CENTER,
+                            color=ft.Colors.WHITE,
+                        ),
+                    ),
+                    # Conteúdo que cresce e rola
+                    ft.Container(
+                        expand=True,
+                        content=ft.ListView(
+                            expand=True,
+                            spacing=10,
+                            padding=20,
+                            controls=conteudo,
+                        ),
+                    ),
+                    # NAVIGATION BAR no fim (simulada)
+                    nav_bar,
+                ],
+            )
+        ],
+    )
+
+
+def criar_card_serie(
+    nome: str, qtd_exercicios: int, on_click=None, on_delete=None
+):
     return ft.ElevatedButton(
         width=300,
         height=100,
         style=ft.ButtonStyle(
             bgcolor=ft.Colors.GREY_900,
-            color="#F1F1F1",
+            color='#F1F1F1',
             shape=ft.RoundedRectangleBorder(radius=12),
             overlay_color=ft.Colors.GREY_800,
             padding=ft.Padding(15, 10, 15, 10),
@@ -170,31 +178,44 @@ def criar_card_serie(nome: str, qtd_exercicios: int, on_click=None, on_delete=No
                 ft.Row(
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     controls=[
-                        ft.Text(nome, size=35, weight=ft.FontWeight.BOLD, theme_style=ft.TextThemeStyle.DISPLAY_LARGE),
+                        ft.Text(
+                            nome,
+                            size=35,
+                            weight=ft.FontWeight.BOLD,
+                            theme_style=ft.TextThemeStyle.DISPLAY_LARGE,
+                        ),
                         ft.IconButton(
                             icon=ft.icons.DELETE_OUTLINE,
                             icon_color=ft.Colors.RED_300,
-                            tooltip="Excluir série",
-                            on_click=lambda e: on_delete() if on_delete else None
-                        )
-                    ]
+                            tooltip='Excluir série',
+                            on_click=lambda e: on_delete()
+                            if on_delete
+                            else None,
+                        ),
+                    ],
                 ),
                 ft.Row(
                     alignment=ft.MainAxisAlignment.END,
                     controls=[
-                        ft.Text(f"{qtd_exercicios} exercícios", size=24, color="#A6A6A6", text_align=ft.TextAlign.RIGHT)
-                    ]
-                )
-            ]
-        )
+                        ft.Text(
+                            f'{qtd_exercicios} exercícios',
+                            size=24,
+                            color='#A6A6A6',
+                            text_align=ft.TextAlign.RIGHT,
+                        )
+                    ],
+                ),
+            ],
+        ),
     )
+
 
 def btn_nova_serie(on_click=None):
     return ft.ElevatedButton(
         height=100,
         style=ft.ButtonStyle(
             bgcolor=ft.Colors.GREY_900,
-            color="#A6A6A6",
+            color='#A6A6A6',
             shape=ft.RoundedRectangleBorder(radius=12),
             overlay_color=ft.Colors.GREY_800,
             padding=ft.Padding(15, 10, 15, 10),
@@ -204,8 +225,99 @@ def btn_nova_serie(on_click=None):
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=10,
             controls=[
-                ft.Icon(name=ft.icons.ADD_BOX_OUTLINED, color="#A6A6A6"),
-                ft.Text("Nova Série", size=20, color="#A6A6A6", weight=ft.FontWeight.BOLD)
-            ]
-        )
+                ft.Icon(name=ft.icons.ADD_BOX_OUTLINED, color='#A6A6A6'),
+                ft.Text(
+                    'Nova Série',
+                    size=20,
+                    color='#A6A6A6',
+                    weight=ft.FontWeight.BOLD,
+                ),
+            ],
+        ),
+    )
+
+
+def header_editavel(nome_exercicio: str, on_click=None) -> ft.Column:
+    return ft.Column(
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        spacing=2,
+        controls=[
+            ft.Row(
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=8,
+                controls=[
+                    ft.Text(
+                        nome_exercicio,
+                        size=32,
+                        weight=ft.FontWeight.BOLD,
+                        color='#A6A6F6',
+                    ),
+                    ft.IconButton(
+                        icon=ft.icons.EDIT_OUTLINED,
+                        icon_color='#A6A6F6',
+                        tooltip='Editar nome da série',
+                        on_click=on_click,
+                        icon_size=22,
+                        style=ft.ButtonStyle(padding=0),
+                    ),
+                ],
+            ),
+            ft.Container(
+                margin=ft.Margin(0, 15, 0, 20),
+                height=2,  # ou "infinity" para full width
+                bgcolor='#A6A6F6',
+            ),
+        ],
+    )
+
+
+def card_exercicio(
+    nome: str, series: int, repeticoes: int, on_click=None
+) -> ft.Container:
+    return ft.Container(
+        margin=ft.Margin(0, 15, 0, 20),
+        content=ft.ElevatedButton(
+            on_click=on_click,
+            height=120,
+            width=300,
+            style=ft.ButtonStyle(
+                bgcolor=ft.Colors.GREY_900,
+                color='#A6A6F6',
+                shape=ft.RoundedRectangleBorder(radius=16),
+                padding=ft.Padding(16, 10, 16, 10),
+                overlay_color=ft.Colors.GREY_800,
+            ),
+            content=ft.Column(
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=10,
+                        controls=[
+                            ft.Icon(
+                                name=ft.icons.IMAGE_OUTLINED,
+                                color='#A6A6F6',
+                                size=32,
+                            ),
+                            ft.Text(
+                                nome,
+                                size=18,
+                                weight=ft.FontWeight.BOLD,
+                                color='#A6A6F6',
+                                max_lines=2,
+                            ),
+                        ],
+                    ),
+                    ft.Container(height=1, bgcolor='#A6A6F6'),
+                    ft.Text(
+                        f'{series} × {repeticoes}',
+                        size=20,
+                        weight=ft.FontWeight.BOLD,
+                        color='#A6A6F6',
+                    ),
+                ],
+            ),
+        ),
     )

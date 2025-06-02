@@ -1,26 +1,17 @@
 from src.funcoes import *
 
+
 def serie():
     return layout_com_header_fixado(
-        "Minhas Séries",
+        'Série',
         [
-            ft.Container(
-                expand=True,
-                padding=20,
-                content=ft.Column(
-                    spacing=20,
-                    alignment=ft.MainAxisAlignment.CENTER,
-                    controls=[
-                        btn_nova_serie(on_click=lambda e: e.page.go("/nova_serie"))
-                    ]
-                )
+            header_editavel('Peito', on_click=lambda e: e.page.go('/serie')),
+            card_exercicio(
+                'Supino Inclinado', 4, 12, on_click=lambda e: print('supino')
             ),
-            criar_card_serie(
-                "Peito",
-                4,
-                on_click=lambda e: e.page.go("/serie"),
-                on_delete=lambda: print("Excluir série Peito")
+            card_exercicio(
+                'Supino Reto', 4, 12, on_click=lambda e: print('supino')
             ),
         ],
-        nav_bar
+        nav_bar,
     )
