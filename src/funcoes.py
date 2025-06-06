@@ -53,7 +53,7 @@ def botao_menu_principal(texto: str, icone: str, on_click):
         content=ft.Row(
             controls=[
                 ft.Icon(name=icone, size=22),
-                ft.Text(
+                ft.Text(3,
                     value=texto,
                     size=16,
                     weight=ft.FontWeight.BOLD,
