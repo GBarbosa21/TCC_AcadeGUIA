@@ -2,12 +2,6 @@
 
 AcadeGUIA é um aplicativo de academia com **foco em mobile**, desenvolvido com a framework Flet em Python para criar e gerenciar séries de exercícios de forma simples e intuitiva.
 
-![Demonstração do AcadeGUIA](https://imgur.com/a/QJCY8dk)
-<p align="center">
-  <img src="https://imgur.com/a/QJCY8dk" alt="Demonstração do AcadeGUIA" width="350">
-</p>
-*Para uma visualização mobile durante o desenvolvimento, redimensione a janela do aplicativo para um formato vertical, como um celular.*
-
 ## 🚀 Principais Funcionalidades
 
 O AcadeGUIA foi projetado para oferecer uma experiência de usuário limpa e direta, permitindo que o usuário se concentre em seus treinos.
