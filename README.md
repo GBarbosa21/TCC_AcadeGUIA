@@ -1,81 +1,73 @@
-# Acadeguia app
+AcadeGUIA 🏋️‍♂️
+Um aplicativo de academia multiplataforma, desenvolvido com a framework Flet em Python, para criar e gerenciar séries de exercícios de forma simples e intuitiva.
 
-## Run the app
+🚀 Principais Funcionalidades
+O AcadeGUIA foi projetado para oferecer uma experiência de usuário limpa e direta, permitindo que o usuário se concentre em seus treinos.
 
-### uv
+Menu Principal Intuitivo: Acesso rápido às seções principais do aplicativo: "Minhas Séries", "Exercícios" e "Exercícios Salvos". 
+Gerenciamento de Séries:
+Visualização de todas as séries salvas, cada uma exibindo o nome e a quantidade total de exercícios. 
+Criação de novas séries de treino através de um botão de acesso rápido. 
+Detalhes da Série:
+Visualização detalhada de cada série, listando os exercícios que a compõem, junto com o número de séries e repetições (ex: 4x12). 
+Modo de edição que permite remover exercícios de uma série existente. 
+Biblioteca de Exercícios:
+Uma lista geral com todos os exercícios disponíveis, permitindo ao usuário adicionar novos exercícios às suas séries. 
+Uma seção de "Exercícios Salvos" para favoritar exercícios específicos. 
+Tela de detalhes para cada exercício, mostrando imagem e instruções de execução. 
+🛠️ Tecnologias Utilizadas
+Framework: Flet
+Linguagem: Python 3
+📁 Estrutura do Projeto
+O projeto é organizado de forma modular para facilitar a manutenção e a adição de novas funcionalidades.
 
-Run as a desktop app:
+/
+├── assets/                 # Pasta para imagens e outros recursos estáticos
+│   ├── AcadeGUIA.png
+│   └── favicon.png
+├── funcoes.py              # Módulo com todos os componentes reutilizáveis (botões, cards, layout)
+├── styles.py               # Módulo para estilos de componentes específicos
+├── utils.py                # Módulo responsável pelo roteamento e navegação do app
+├── inicio.py               # View da tela de Início (menu principal)
+├── Minhas_series.py        # View da tela "Minhas Séries"
+├── serie.py                # View da tela de detalhes de uma série
+├── main.py                 # Ponto de entrada principal da aplicação
+└── README.md               # Documentação do projeto (este arquivo)
+⚙️ Instalação e Configuração
+Para executar este projeto localmente, siga os passos abaixo:
 
-```
-uv run flet run
-```
+Clone o repositório:
 
-Run as a web app:
+Bash
 
-```
-uv run flet run --web
-```
+git clone <url-do-seu-repositorio>
+cd <nome-da-pasta-do-projeto>
+Crie e ative um ambiente virtual (recomendado):
 
-### Poetry
+Bash
 
-Install dependencies from `pyproject.toml`:
+# Para Windows
+python -m venv venv
+.\venv\Scripts\activate
 
-```
-poetry install
-```
+# Para macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+Instale as dependências:
+O único requisito principal é o Flet.
 
-Run as a desktop app:
+Bash
 
-```
-poetry run flet run
-```
+pip install flet
+▶️ Como Executar
+Com o ambiente virtual ativado e as dependências instaladas, execute o seguinte comando no terminal, na pasta raiz do projeto:
 
-Run as a web app:
+Bash
 
-```
-poetry run flet run --web
-```
+flet run
+Alternativamente, você pode executar o arquivo main.py diretamente:
 
-For more details on running the app, refer to the [Getting Started Guide](https://flet.dev/docs/getting-started/).
+Bash
 
-## Build the app
-
-### Android
-
-```
-flet build apk -v
-```
-
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://flet.dev/docs/publish/android/).
-
-### iOS
-
-```
-flet build ipa -v
-```
-
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://flet.dev/docs/publish/ios/).
-
-### macOS
-
-```
-flet build macos -v
-```
-
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://flet.dev/docs/publish/macos/).
-
-### Linux
-
-```
-flet build linux -v
-```
-
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://flet.dev/docs/publish/linux/).
-
-### Windows
-
-```
-flet build windows -v
-```
-
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://flet.dev/docs/publish/windows/).
+python main.py
+O aplicativo será aberto em uma janela nativa do seu sistema operacional.
