@@ -47,7 +47,7 @@ def layout_com_header_fixado(
 
 def botao_menu_principal(texto: str, icone: str, on_click):
     """
-    Cria um botão estilizado para o menu principal, conforme o protótipo.
+    Cria um botão estilizado para o menu principal, conforme o protótipo..
     """
     return ft.ElevatedButton(
         content=ft.Row(
