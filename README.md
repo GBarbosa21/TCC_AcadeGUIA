@@ -1,81 +1,97 @@
-# Acadeguia app
+# AcadeGUIA 🏋️‍♂️
 
-## Run the app
+AcadeGUIA é um aplicativo de academia com **foco em mobile**, desenvolvido com a framework Flet em Python para criar e gerenciar séries de exercícios de forma simples e intuitiva.
 
-### uv
+![Tela Principal do AcadeGUIA](https://i.imgur.com/nJbWz3V.png)
+*Para uma visualização mobile durante o desenvolvimento, redimensione a janela do aplicativo para um formato vertical, como um celular.*
 
-Run as a desktop app:
+## 🚀 Principais Funcionalidades
 
-```
-uv run flet run
-```
+O AcadeGUIA foi projetado para oferecer uma experiência de usuário limpa e direta, permitindo que o usuário se concentre em seus treinos.
 
-Run as a web app:
+* **Menu Principal Intuitivo:** Acesso rápido às seções principais do aplicativo: "Minhas Séries", "Exercícios" e "Exercícios Salvos".
+* **Gerenciamento de Séries:**
+    * Visualização de todas as séries salvas, cada uma exibindo o nome e a quantidade total de exercícios.
+    * Criação de novas séries de treino através de um botão de acesso rápido.
+* **Detalhes da Série:**
+    * Visualização detalhada de cada série, listando os exercícios que a compõem, junto com o número de séries e repetições (ex: 4x12).
+    * Modo de edição que permite remover exercícios de uma série existente.
+* **Biblioteca de Exercícios:**
+    * Uma lista geral com todos os exercícios disponíveis, permitindo ao usuário adicionar novos exercícios às suas séries.
+    * Uma seção de "Exercícios Salvos" para favoritar exercícios específicos.
 
-```
-uv run flet run --web
-```
+## 📱 Foco em Mobile e Deploy
 
-### Poetry
+Este aplicativo foi construído com o objetivo de ser um **Progressive Web App (PWA)**, que pode ser "instalado" na tela inicial de qualquer celular (iOS ou Android) diretamente pelo navegador, sem precisar de uma loja de aplicativos.
 
-Install dependencies from `pyproject.toml`:
+## 🛠️ Tecnologias Utilizadas
 
-```
-poetry install
-```
+* **Framework:** [Flet](https://flet.dev/)
+* **Linguagem:** Python 3
 
-Run as a desktop app:
+## 📁 Estrutura do Projeto
 
-```
-poetry run flet run
-```
+O projeto é organizado de forma modular para facilitar a manutenção e a adição de novas funcionalidades.
 
-Run as a web app:
+/
+├── assets/
 
-```
-poetry run flet run --web
-```
+├── funcoes.py
 
-For more details on running the app, refer to the [Getting Started Guide](https://flet.dev/docs/getting-started/).
+├── styles.py
 
-## Build the app
+├── utils.py
 
-### Android
+├── inicio.py
 
-```
-flet build apk -v
-```
+├── Minhas_series.py
 
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://flet.dev/docs/publish/android/).
+├── serie.py
 
-### iOS
+├── main.py
 
-```
-flet build ipa -v
-```
+└── README.md
 
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://flet.dev/docs/publish/ios/).
 
-### macOS
 
-```
-flet build macos -v
-```
+## ⚙️ Instalação e Configuração
 
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://flet.dev/docs/publish/macos/).
+1.  **Clone o repositório:**
+    ```sh
+    git clone <url-do-seu-repositorio>
+    cd <nome-da-pasta-do-projeto>
+    ```
 
-### Linux
+2.  **Crie e ative um ambiente virtual:**
+    ```sh
+    # Windows
+    python -m venv venv
+    .\venv\Scripts\activate
 
-```
-flet build linux -v
-```
+    # macOS/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://flet.dev/docs/publish/linux/).
+3.  **Instale as dependências:**
+    ```sh
+    pip install flet
+    ```
 
-### Windows
+## ▶️ Como Executar e Testar
 
-```
-flet build windows -v
-```
+### Para Desenvolvimento Rápido (Desktop)
 
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://flet.dev/docs/publish/windows/).
+Use este comando para ver o app em uma janela de desktop. É ideal para fazer alterações rápidas.
+
+```sh
+flet run
+Para Testar a Visualização Mobile (Navegador)
+Para ver como o app se comporta em um celular, execute-o no navegador.
+
+Execute o comando:
+Bash
+
+flet run -w
+Abra o link http://localhost:8550 no seu navegador de computador.
+Para testar no seu celular: Certifique-se de que seu celular e seu computador estão na mesma rede Wi-Fi. Abra o navegador no celular e acesse o endereço IP do seu computador na porta 8550 (ex: http://192.168.1.5:8550). O Flet mostrará o endereço IP correto no terminal quando você executar o comando.
