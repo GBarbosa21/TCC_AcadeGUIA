@@ -22,17 +22,28 @@ Linguagem: Python 3
 O projeto é organizado de forma modular para facilitar a manutenção e a adição de novas funcionalidades.
 
 /
-├── assets/                 # Pasta para imagens e outros recursos estáticos
+├── assets/   # Pasta para imagens e outros recursos estáticos
+
 │   ├── AcadeGUIA.png
+
 │   └── favicon.png
+
 ├── funcoes.py              # Módulo com todos os componentes reutilizáveis (botões, cards, layout)
+
 ├── styles.py               # Módulo para estilos de componentes específicos
+
 ├── utils.py                # Módulo responsável pelo roteamento e navegação do app
+
 ├── inicio.py               # View da tela de Início (menu principal)
+
 ├── Minhas_series.py        # View da tela "Minhas Séries"
+
 ├── serie.py                # View da tela de detalhes de uma série
+
 ├── main.py                 # Ponto de entrada principal da aplicação
+
 └── README.md               # Documentação do projeto (este arquivo)
+
 ⚙️ Instalação e Configuração
 Para executar este projeto localmente, siga os passos abaixo:
 
