@@ -5,11 +5,11 @@ from ..Styles import EstiloTxt
 
 
 def inicio(page: ft.Page):
-    """Constrói a View da página inicial com os botões estilizados conforme o protótipo."""
+    """Constrói a View da página inicial."""
 
     conteudo = [
         ft.Image(
-            src='assets/AcadeGUIA.png', fit=ft.ImageFit.CONTAIN, height=150
+            src='assets/AcadeGUIA.png', fit=ft.ImageFit.CONTAIN, height=240
         ),
         # Container para garantir o alinhamento e espaçamento corretos
         ft.Container(

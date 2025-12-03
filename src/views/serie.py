@@ -4,7 +4,7 @@ from ..funcoes import layout_com_header_fixado, nav_bar, card_exercicio
 
 
 def serie(page: ft.Page):
-    """Constrói a View que detalha uma série específica, baseada no protótipo."""
+    """Constrói a View que detalha uma série específica."""
 
     # Conteúdo alinhado com o protótipo da página "Série"
     conteudo = [
@@ -36,13 +36,13 @@ def serie(page: ft.Page):
             'Supino Inclinado',
             4,
             12,
-            on_click=lambda e: print('supino inclinado'),
+            on_click=lambda e: page.go('/exercicios'),
         ),
         card_exercicio(
-            'Supino Reto', 4, 12, on_click=lambda e: print('supino reto')
+            'Supino Reto', 4, 12, on_click=lambda e: page.go('/exercicios')
         ),
         card_exercicio(
-            'Voador Peitoral', 4, 12, on_click=lambda e: print('voador')
+            'Voador Peitoral', 4, 12, on_click=lambda e: page.go('/exercicios')
         ),
     ]
 

@@ -47,35 +47,31 @@ def layout_com_header_fixado(
 
 def botao_menu_principal(texto: str, icone: str, on_click):
     """
-    Cria um botão estilizado para o menu principal, conforme o protótipo..
+    Cria um botão estilizado para o menu principal, conforme o protótipo.
     """
     return ft.ElevatedButton(
         content=ft.Row(
             controls=[
                 ft.Icon(name=icone, size=22),
-                ft.Text(3,
-                    value=texto,
-                    size=16,
-                    weight=ft.FontWeight.BOLD,
-                    text_align=ft.TextAlign.CENTER,
-                ),
+
+                # MUDANÇA: Usando apenas a palavra-chave 'value' para definir o texto.
+                # A versão anterior provavelmente tinha 'texto' duas vezes.
+                ft.Text(value=texto, size=16, weight=ft.FontWeight.BOLD),
+
             ],
-            spacing=20,
+            spacing=15,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         on_click=on_click,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
-            # Cor de fundo clara, mas não totalmente branca, para um look moderno
             bgcolor=ft.colors.WHITE12,
-            # Cor do texto e ícone
             color=ft.colors.WHITE,
             padding=ft.padding.all(18),
         ),
-        width=600,  # Largura fixa
-        height=75,  # Altura fixa
+        width=320,
+        height=65,
     )
-
 
 def nav_bar(page: ft.Page, selected_index: int) -> ft.NavigationBar:
     """Cria a barra de navegação inferior. Esta é a versão unificada."""
@@ -248,4 +244,150 @@ def card_exercicio(
                 ],
             ),
         ),
+    )
+
+def btn_info_exercicio(nome_exercicio: str, on_click=None, on_Save=None, on_Play=None) -> ft.Container:
+    return ft.Container(
+        content=ft.ElevatedButton(
+            on_click=on_click,
+            height=220,
+            style=ft.ButtonStyle(
+                bgcolor=ft.colors.GREY_900,
+                color='#A6A6F6',
+                shape=ft.RoundedRectangleBorder(radius=16),
+                padding=ft.Padding(16, 10, 16, 10),
+                overlay_color=ft.colors.GREY_800,
+            ),
+            content=ft.Column(
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=10,
+                        controls=[
+                            ft.Icon(
+                                name=ft.icons.FITNESS_CENTER,
+                                color='#A6A6F6',
+                                size=128,
+                            ),
+                        ],
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        spacing=5,
+                        controls=[
+                            ft.Text(
+                                f'{nome_exercicio}',
+                                size=20,
+                                weight=ft.FontWeight.BOLD,
+                                color='#A6A6F6',
+                            ),
+                        ]
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Row(
+                                alignment=ft.MainAxisAlignment.START,
+                                spacing=10,
+                                controls=[
+                                    ft.IconButton(
+                                        icon=ft.icons.SAVE_AS,
+                                        icon_color='#A6A6F6',
+                                        icon_size=32,
+                                        tooltip='Salvar Exercicio',
+                                        on_click=lambda e: on_Save
+                                        if on_Save
+                                        else None,
+                                    ),
+                                    ft.IconButton(
+                                        icon=ft.icons.PLAY_ARROW_OUTLINED,
+                                        icon_color='#A6A6F6',
+                                        icon_size=32,
+                                        tooltip='Play Exercicio',
+                                        on_click=lambda e: on_Play
+                                        if on_Play
+                                        else None,
+                                    )
+                                ]
+                            ),
+                        ]
+                    ),
+                ],
+            )
+        )
+    )
+
+def btn_info_exercicio_salvos(nome_exercicio: str, on_click=None, on_Delete=None, on_Play=None) -> ft.Container:
+    return ft.Container(
+        content=ft.ElevatedButton(
+            on_click=on_click,
+            height=220,
+            style=ft.ButtonStyle(
+                bgcolor=ft.colors.GREY_900,
+                color='#A6A6F6',
+                shape=ft.RoundedRectangleBorder(radius=16),
+                padding=ft.Padding(16, 10, 16, 10),
+                overlay_color=ft.colors.GREY_800,
+            ),
+            content=ft.Column(
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=10,
+                        controls=[
+                            ft.Icon(
+                                name=ft.icons.FITNESS_CENTER,
+                                color='#A6A6F6',
+                                size=128,
+                            ),
+                        ],
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        spacing=5,
+                        controls=[
+                            ft.Text(
+                                f'{nome_exercicio}',
+                                size=20,
+                                weight=ft.FontWeight.BOLD,
+                                color='#A6A6F6',
+                            ),
+                        ]
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Row(
+                                alignment=ft.MainAxisAlignment.START,
+                                spacing=10,
+                                controls=[
+                                    ft.IconButton(
+                                        icon=ft.icons.SAVE_AS,
+                                        icon_color='#A6A6F6',
+                                        icon_size=32,
+                                        tooltip='Remover Exercicio da lista',
+                                        on_click=lambda e: on_Delete
+                                        if on_Delete
+                                        else None,
+                                    ),
+                                    ft.IconButton(
+                                        icon=ft.icons.PLAY_ARROW_OUTLINED,
+                                        icon_color='#A6A6F6',
+                                        icon_size=32,
+                                        tooltip='Play Exercicio',
+                                        on_click=lambda e: on_Play
+                                        if on_Play
+                                        else None,
+                                    )
+                                ]
+                            ),
+                        ]
+                    ),
+                ],
+            )
+        )
     )

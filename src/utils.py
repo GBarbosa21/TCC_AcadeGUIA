@@ -5,10 +5,8 @@ import flet as ft
 from src.views.inicio import inicio
 from src.views.Minhas_series import minhas_series
 from src.views.serie import serie
-
-
-# A view de exercícios pode ser adicionada aqui quando for criada
-# from exercicios import exercicios
+from src.views.exercicios import exercicio_info
+from src.views.exercicios_salvos import exercicios_salvos_info
 
 
 def route_change(page: ft.Page):
@@ -22,7 +20,8 @@ def route_change(page: ft.Page):
         '/inicio': inicio,
         '/minhas_series': minhas_series,
         '/serie': serie,
-        # "/exercicios": exercicios, # <-- Descomente quando criar a página de exercícios
+        "/exercicios": exercicio_info,
+        '/exercicios_salvos': exercicios_salvos_info
     }
 
     # Limpa a tela
