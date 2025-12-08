@@ -32,9 +32,7 @@ def inicio(page: ft.Page):
                     botao_menu_principal(
                         texto='Exercícios Salvos',
                         icone=ft.icons.BOOKMARK_BORDER,
-                        on_click=lambda e: print(
-                            'Navegar para Exercícios Salvos'
-                        ),
+                        on_click=lambda e: e.page.go('/exercicios_salvos'),
                     ),
                 ],
             ),
