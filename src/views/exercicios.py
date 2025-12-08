@@ -36,7 +36,7 @@ def exercicio_info(page: ft.Page):
             on_click=lambda e: print('supino inclinado'),
             on_Save=lambda e: e.page.go('/exercicios_salvos'),
             on_Play=lambda e: print('Play')
-        )
+        ),
     ]
 
     return layout_com_header_fixado(

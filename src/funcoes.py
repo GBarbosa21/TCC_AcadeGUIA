@@ -391,3 +391,124 @@ def btn_info_exercicio_salvos(nome_exercicio: str, on_click=None, on_Delete=None
             )
         )
     )
+
+def btn_inserir_exercicio(on_click=None):
+    """Botão para adicionar um novo exercício à série."""
+    return ft.ElevatedButton(
+        width=350,  # Mesma largura dos cards
+        height=70,  # Um pouco menor que o botão de nova série
+        style=ft.ButtonStyle(
+            bgcolor=ft.colors.GREY_900,
+            color="#A6A6A6",
+            shape=ft.RoundedRectangleBorder(radius=12),
+            overlay_color=ft.colors.GREY_800,
+            padding=ft.Padding(15, 10, 15, 10),
+        ),
+        on_click=on_click,
+        content=ft.Row(
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=10,
+            controls=[
+                ft.Icon(name=ft.icons.ADD_CIRCLE_OUTLINE, color="#A6A6A6", size=24),
+                ft.Text(
+                    "Inserir Exercício",
+                    size=18,
+                    color="#A6A6A6",
+                    weight=ft.FontWeight.BOLD
+                )
+            ]
+        )
+    )
+
+def card_exercicio_selecionavel(nome_exercicio: str, on_change_check=None):
+    """
+    Cria uma linha com um Checkbox e o Card de Exercício ao lado.
+    Permite selecionar exercícios para adicionar à série.
+    """
+    return ft.Row(
+        alignment=ft.MainAxisAlignment.CENTER,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        controls=[
+            ft.Checkbox(
+                on_change=on_change_check,
+                fill_color={
+                    ft.ControlState.SELECTED: "#A6A6F6",
+                    ft.ControlState.DEFAULT: ft.colors.WHITE54
+                }
+            ),
+            # O container expande para o card ocupar o resto da largura
+            ft.Container(
+                expand=True,
+                # Reutilizamos o btn_info_exercicio existente
+                content=btn_info_exercicio_salvar(
+                    nome_exercicio,
+                    on_click=lambda e: print(f"Info de {nome_exercicio}"),
+                    on_Play=lambda e: print(f"Play {nome_exercicio}")
+                )
+            )
+        ]
+    )
+
+def btn_info_exercicio_salvar(nome_exercicio: str, on_click=None, on_Save=None, on_Play=None) -> ft.Container:
+    return ft.Container(
+        content=ft.ElevatedButton(
+            on_click=on_click,
+            height=220,
+            style=ft.ButtonStyle(
+                bgcolor=ft.colors.GREY_900,
+                color='#A6A6F6',
+                shape=ft.RoundedRectangleBorder(radius=16),
+                padding=ft.Padding(16, 10, 16, 10),
+                overlay_color=ft.colors.GREY_800,
+            ),
+            content=ft.Column(
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=10,
+                        controls=[
+                            ft.Icon(
+                                name=ft.icons.FITNESS_CENTER,
+                                color='#A6A6F6',
+                                size=128,
+                            ),
+                        ],
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        spacing=5,
+                        controls=[
+                            ft.Text(
+                                f'{nome_exercicio}',
+                                size=20,
+                                weight=ft.FontWeight.BOLD,
+                                color='#A6A6F6',
+                            ),
+                        ]
+                    ),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Row(
+                                alignment=ft.MainAxisAlignment.START,
+                                spacing=10,
+                                controls=[
+                                    ft.IconButton(
+                                        icon=ft.icons.PLAY_ARROW_OUTLINED,
+                                        icon_color='#A6A6F6',
+                                        icon_size=32,
+                                        tooltip='Play Exercicio',
+                                        on_click=lambda e: on_Play
+                                        if on_Play
+                                        else None,
+                                    )
+                                ]
+                            ),
+                        ]
+                    ),
+                ],
+            )
+        )
+    )
