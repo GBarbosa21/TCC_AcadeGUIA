@@ -8,6 +8,7 @@ from src.views.serie import serie
 from src.views.exercicios import exercicio_info
 from src.views.exercicios_salvos import exercicios_salvos_info
 from src.views.selecionar_exercicios import selecionar_exercicios
+from src.views.detalhes_exercicios import detalhes_exercicio
 
 
 def route_change(page: ft.Page):
@@ -23,7 +24,8 @@ def route_change(page: ft.Page):
         '/serie': serie,
         "/exercicios": exercicio_info,
         '/exercicios_salvos': exercicios_salvos_info,
-        '/selecionar_exercicios': selecionar_exercicios
+        '/selecionar_exercicios': selecionar_exercicios,
+        '/detalhes_exercicio': detalhes_exercicio
     }
 
     # Limpa a tela

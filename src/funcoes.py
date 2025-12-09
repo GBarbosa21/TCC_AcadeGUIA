@@ -1,10 +1,8 @@
-# funcoes.py
 import flet as ft
-from Styles import EstiloTxt  # <-- Mantive sua importação original
-
+from Styles import EstiloTxt
 
 # =================================================================
-# FUNÇÃO DE LAYOUT BASE (A PEÇA QUE FALTAVA)
+# FUNÇÃO DE LAYOUT BASE
 # =================================================================
 def layout_com_header_fixado(
     page: ft.Page, titulo: str, conteudo: list, bottom: ft.NavigationBar
@@ -15,8 +13,8 @@ def layout_com_header_fixado(
     return ft.View(
         route=page.route,
         padding=0,
-        controls=[  # MUDANÇA: A barra de navegação agora vai dentro dos 'controls'
-            # 1. Header (continua igual)
+        controls=[
+            # 1. Header
             ft.Container(
                 alignment=ft.alignment.center,
                 padding=15,
@@ -25,39 +23,30 @@ def layout_com_header_fixado(
                     titulo, size=24, weight=ft.FontWeight.BOLD, color='#F1F1F1'
                 ),
             ),
-            # 2. Conteúdo principal que se expande para empurrar a navbar para baixo
+            # 2. Conteúdo principal
             ft.Container(
-                expand=True,  # <-- MUDANÇA CRÍTICA: Faz este container ocupar todo o espaço disponível
+                expand=True,
                 padding=20,
                 content=ft.ListView(
                     expand=True, spacing=20, controls=conteudo
                 ),
             ),
-            # 3. A Barra de Navegação como o último item dos controls
+            # 3. NavBar
             bottom,
         ]
-        # O parâmetro 'bottom' foi removido daqui
     )
 
 
 # =================================================================
-# SEUS COMPONENTES (ORGANIZADOS E SEM DUPLICATAS)
+# SEUS COMPONENTES
 # =================================================================
 
-
 def botao_menu_principal(texto: str, icone: str, on_click):
-    """
-    Cria um botão estilizado para o menu principal, conforme o protótipo.
-    """
     return ft.ElevatedButton(
         content=ft.Row(
             controls=[
                 ft.Icon(name=icone, size=22),
-
-                # MUDANÇA: Usando apenas a palavra-chave 'value' para definir o texto.
-                # A versão anterior provavelmente tinha 'texto' duas vezes.
                 ft.Text(value=texto, size=16, weight=ft.FontWeight.BOLD),
-
             ],
             spacing=15,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
@@ -74,8 +63,6 @@ def botao_menu_principal(texto: str, icone: str, on_click):
     )
 
 def nav_bar(page: ft.Page, selected_index: int) -> ft.NavigationBar:
-    """Cria a barra de navegação inferior. Esta é a versão unificada."""
-    # MUDANÇA: Ordem das rotas alterada
     routes = ['/exercicios', '/inicio', '/minhas_series']
 
     def go_route(e):
@@ -84,7 +71,6 @@ def nav_bar(page: ft.Page, selected_index: int) -> ft.NavigationBar:
     return ft.NavigationBar(
         selected_index=selected_index,
         on_change=go_route,
-        # MUDANÇA: Ordem dos destinos alterada
         destinations=[
             ft.NavigationBarDestination(
                 icon=ft.icons.FITNESS_CENTER, label='Exercícios'
@@ -96,9 +82,7 @@ def nav_bar(page: ft.Page, selected_index: int) -> ft.NavigationBar:
         ],
     )
 
-
 def btn_nova_serie(on_click=None):
-    """Botão padrão para criar uma nova série."""
     return ft.ElevatedButton(
         height=100,
         style=ft.ButtonStyle(
@@ -124,11 +108,9 @@ def btn_nova_serie(on_click=None):
         ),
     )
 
-
 def criar_card_serie(
     nome: str, qtd_exercicios: int, on_click=None, on_delete=None
 ):
-    """Card para exibir uma série salva."""
     return ft.ElevatedButton(
         width=350,
         height=100,
@@ -164,9 +146,7 @@ def criar_card_serie(
         ),
     )
 
-
 def header_editavel(nome_exercicio: str, on_click=None) -> ft.Column:
-    """Header usado na página de uma série específica."""
     return ft.Column(
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         spacing=2,
@@ -195,11 +175,9 @@ def header_editavel(nome_exercicio: str, on_click=None) -> ft.Column:
         ],
     )
 
-
 def card_exercicio(
     nome: str, series: int, repeticoes: int, on_click=None
 ) -> ft.Container:
-    """Card para exibir um exercício dentro de uma série."""
     return ft.Container(
         content=ft.ElevatedButton(
             on_click=on_click,
@@ -297,18 +275,14 @@ def btn_info_exercicio(nome_exercicio: str, on_click=None, on_Save=None, on_Play
                                         icon_color='#A6A6F6',
                                         icon_size=32,
                                         tooltip='Salvar Exercicio',
-                                        on_click=lambda e: on_Save
-                                        if on_Save
-                                        else None,
+                                        on_click=lambda e: on_Save(e) if on_Save else None,
                                     ),
                                     ft.IconButton(
                                         icon=ft.icons.PLAY_ARROW_OUTLINED,
                                         icon_color='#A6A6F6',
                                         icon_size=32,
                                         tooltip='Play Exercicio',
-                                        on_click=lambda e: on_Play
-                                        if on_Play
-                                        else None,
+                                        on_click=lambda e: on_Play(e) if on_Play else None,
                                     )
                                 ]
                             ),
@@ -370,18 +344,16 @@ def btn_info_exercicio_salvos(nome_exercicio: str, on_click=None, on_Delete=None
                                         icon_color='#A6A6F6',
                                         icon_size=32,
                                         tooltip='Remover Exercicio da lista',
-                                        on_click=lambda e: on_Delete
-                                        if on_Delete
-                                        else None,
+                                        # CORRIGIDO: Adicionado (e)
+                                        on_click=lambda e: on_Delete(e) if on_Delete else None,
                                     ),
                                     ft.IconButton(
                                         icon=ft.icons.PLAY_ARROW_OUTLINED,
                                         icon_color='#A6A6F6',
                                         icon_size=32,
                                         tooltip='Play Exercicio',
-                                        on_click=lambda e: on_Play
-                                        if on_Play
-                                        else None,
+                                        # CORRIGIDO: Adicionado (e)
+                                        on_click=lambda e: on_Play(e) if on_Play else None,
                                     )
                                 ]
                             ),
@@ -420,36 +392,9 @@ def btn_inserir_exercicio(on_click=None):
         )
     )
 
-def card_exercicio_selecionavel(nome_exercicio: str, on_change_check=None):
-    """
-    Cria uma linha com um Checkbox e o Card de Exercício ao lado.
-    Permite selecionar exercícios para adicionar à série.
-    """
-    return ft.Row(
-        alignment=ft.MainAxisAlignment.CENTER,
-        vertical_alignment=ft.CrossAxisAlignment.CENTER,
-        controls=[
-            ft.Checkbox(
-                on_change=on_change_check,
-                fill_color={
-                    ft.ControlState.SELECTED: "#A6A6F6",
-                    ft.ControlState.DEFAULT: ft.colors.WHITE54
-                }
-            ),
-            # O container expande para o card ocupar o resto da largura
-            ft.Container(
-                expand=True,
-                # Reutilizamos o btn_info_exercicio existente
-                content=btn_info_exercicio_salvar(
-                    nome_exercicio,
-                    on_click=lambda e: print(f"Info de {nome_exercicio}"),
-                    on_Play=lambda e: print(f"Play {nome_exercicio}")
-                )
-            )
-        ]
-    )
-
+# --- FUNÇÃO AUXILIAR PARA O CARD SELECIONÁVEL ---
 def btn_info_exercicio_salvar(nome_exercicio: str, on_click=None, on_Save=None, on_Play=None) -> ft.Container:
+    """Versão simplificada do card de exercício para a tela de seleção."""
     return ft.Container(
         content=ft.ElevatedButton(
             on_click=on_click,
@@ -500,9 +445,8 @@ def btn_info_exercicio_salvar(nome_exercicio: str, on_click=None, on_Save=None, 
                                         icon_color='#A6A6F6',
                                         icon_size=32,
                                         tooltip='Play Exercicio',
-                                        on_click=lambda e: on_Play
-                                        if on_Play
-                                        else None,
+                                        # CORRIGIDO: Adicionado (e)
+                                        on_click=lambda e: on_Play(e) if on_Play else None,
                                     )
                                 ]
                             ),
@@ -511,4 +455,33 @@ def btn_info_exercicio_salvar(nome_exercicio: str, on_click=None, on_Save=None, 
                 ],
             )
         )
+    )
+
+def card_exercicio_selecionavel(nome_exercicio: str, on_change_check=None):
+    """
+    Cria uma linha com um Checkbox e o Card de Exercício ao lado.
+    Permite selecionar exercícios para adicionar à série.
+    """
+    return ft.Row(
+        alignment=ft.MainAxisAlignment.CENTER,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        controls=[
+            ft.Checkbox(
+                on_change=on_change_check,
+                fill_color={
+                    ft.ControlState.SELECTED: "#A6A6F6",
+                    ft.ControlState.DEFAULT: ft.colors.WHITE54
+                }
+            ),
+            # O container expande para o card ocupar o resto da largura
+            ft.Container(
+                expand=True,
+                # Reutilizamos o btn_info_exercicio_salvar definido acima
+                content=btn_info_exercicio_salvar(
+                    nome_exercicio,
+                    on_click=lambda e: print(f"Info de {nome_exercicio}"),
+                    on_Play=lambda e: print(f"Play {nome_exercicio}")
+                )
+            )
+        ]
     )
