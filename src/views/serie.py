@@ -1,6 +1,6 @@
 # serie.py
 import flet as ft
-from ..funcoes import layout_com_header_fixado, nav_bar, card_exercicio
+from ..funcoes import layout_com_header_fixado, nav_bar, card_exercicio, btn_inserir_exercicio
 
 
 def serie(page: ft.Page):
@@ -44,6 +44,13 @@ def serie(page: ft.Page):
         card_exercicio(
             'Voador Peitoral', 4, 12, on_click=lambda e: page.go('/exercicios')
         ),
+        # --- BOTÃO INSERIR EXERCÍCIO (NOVO) ---
+        ft.Container(
+            padding=ft.Padding(top=10, bottom=20, left=0, right=0),
+            content=btn_inserir_exercicio(
+                on_click=lambda e: page.go('/selecionar_exercicios')
+            )
+        )
     ]
 
     return layout_com_header_fixado(
