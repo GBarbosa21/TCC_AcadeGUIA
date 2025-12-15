@@ -1,40 +1,70 @@
-# Minhas_series.py
 import flet as ft
-from ..funcoes import layout_com_header_fixado, nav_bar, btn_nova_serie, criar_card_serie
+from funcoes import layout_com_header_fixado, nav_bar, btn_nova_serie, criar_card_serie
+from controllers.serie_controller import SerieController
 
 
 def minhas_series(page: ft.Page):
-    print("--- DEBUG: Carregando a view 'minhas_series' ---")
+    # --- Container para os Cards (Dinâmico) ---
+    lista_de_cards = ft.Column(
+        spacing=20,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+    )
 
-    # --- 1. LÓGICA DO POP-UP ---
+    # --- Função de Navegação Inteligente ---
+    def abrir_serie(serie_id, serie_nome):
+        # Salva na memória temporária qual série estamos a ver
+        # Isso conecta com a lógica que acabamos de fazer em serie.py
+        page.session.set("serie_atual_id", serie_id)
+        page.session.set("serie_atual_nome", serie_nome)
+        page.go('/serie')
+
+    # --- Função para Carregar/Recarregar Dados do Banco ---
+    def carregar_series():
+        lista_de_cards.controls.clear()
+        dados = SerieController.buscar_todas()
+
+        for serie in dados:
+            # Cria o card conectando o clique à função abrir_serie
+            card = criar_card_serie(
+                nome=serie["nome"],
+                qtd_exercicios=serie["qtd_exercicios"],
+                # Passa o ID e Nome específicos desta série
+                on_click=lambda e, sid=serie["id"], snome=serie["nome"]: abrir_serie(sid, snome),
+                on_delete=lambda sid=serie["id"]: deletar_serie_action(sid)
+            )
+            lista_de_cards.controls.append(card)
+
+        page.update()
+
+    def deletar_serie_action(id_serie):
+        SerieController.deletar(id_serie)
+        carregar_series()  # Atualiza a tela após deletar
+        print(f"Série {id_serie} deletada do banco.")
+
+    # --- Lógica do Pop-up ---
     txt_nome_serie = ft.TextField(label="Nome da Série", autofocus=True)
 
     def close_dialog(e):
-        print("--- DEBUG: close_dialog chamada ---")
-        page.dialog.open = False
-        page.update()
+        page.close(dialog)
 
     def criar_serie_e_fechar(e):
-        print("--- DEBUG: criar_serie_e_fechar chamada ---")
         nome_da_serie = txt_nome_serie.value
 
         if nome_da_serie:
-            novo_card = criar_card_serie(
-                nome=nome_da_serie,
-                qtd_exercicios=0,
-                on_click=lambda e: e.page.go('/serie'),
-                on_delete=lambda: print(f"Excluir série {nome_da_serie}")
-            )
-            lista_de_cards.controls.append(novo_card)
+            # 1. Salva no Banco Seguro
+            SerieController.criar(nome_da_serie)
 
+            # 2. Atualiza a Interface
+            carregar_series()
+
+            # 3. Limpa e fecha
             txt_nome_serie.value = ""
-            page.dialog.open = False
-            print("--- DEBUG: Nova série criada. Fechando pop-up. ---")
-            page.update()
+            page.close(dialog)
         else:
             txt_nome_serie.error_text = "O nome não pode ser vazio"
             txt_nome_serie.update()
 
+    # Criamos o diálogo
     dialog = ft.AlertDialog(
         modal=True,
         title=ft.Text("Criar Nova Série"),
@@ -46,45 +76,19 @@ def minhas_series(page: ft.Page):
         actions_alignment=ft.MainAxisAlignment.END,
     )
 
-    # Função "Gatilho" para ABRIR o pop-up
     def open_dialog(e):
-        print("--- DEBUG: open_dialog FOI CHAMADA ---")  # <-- MENSAGEM MAIS IMPORTANTE
-        page.dialog = dialog
-        page.dialog.open = True
-        page.update()
-        print("--- DEBUG: page.update() foi chamado após abrir diálogo ---")
+        # Usa page.open para garantir que abra sobre qualquer view
+        page.open(dialog)
 
-    # --- 2. CONTEÚDO VISUAL DA PÁGINA ---
-
-    lista_de_cards = ft.Column(
-        spacing=20,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        controls=[
-            criar_card_serie(
-                'Peito', 4,
-                on_click=lambda e: e.page.go('/serie'),
-                on_delete=lambda: print('Excluir série Peito'),
-            ),
-            criar_card_serie(
-                'Costas', 5,
-                on_click=lambda e: e.page.go('/serie'),
-                on_delete=lambda: print('Excluir série Costas'),
-            ),
-        ]
-    )
-
-    print("--- DEBUG: Criando botão 'Nova Série' ---")
+    # --- Carregamento Inicial ---
+    # Carrega as séries do banco assim que a tela é montada
+    carregar_series()
 
     conteudo_da_pagina = [
-        btn_nova_serie(
-            on_click=open_dialog  # <-- Conecta o botão para abrir o pop-up
-        ),
+        btn_nova_serie(on_click=open_dialog),
         lista_de_cards
     ]
 
-    print("--- DEBUG: Retornando a View para o layout ---")
-
-    # --- 3. RETORNO DA VIEW ---
     return layout_com_header_fixado(
         page,
         'Minhas Séries',
