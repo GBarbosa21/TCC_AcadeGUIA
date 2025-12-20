@@ -1,6 +1,7 @@
-# main.py
 import flet as ft
-from utils import route_change  # <-- Usa o seu arquivo de roteamento
+from utils import route_change
+# 1. Importe a função que popula o banco
+from database.seed import inicializar_catalogo
 
 
 def main(page: ft.Page):
@@ -14,12 +15,15 @@ def main(page: ft.Page):
     }
     page.theme = ft.Theme(font_family='RobotoSlab')
 
-    # IMPORTANTE: A página não tem mais conteúdo fixo.
-    # O conteúdo agora é 100% controlado pelo route_change.
-
     page.on_route_change = lambda e: route_change(page)
     page.go(page.route)
 
 
-# Mantive a sua configuração do ft.app
-ft.app(view=ft.AppView.FLET_APP, target=main, assets_dir='assets')
+# 2. Execute a população do banco ANTES de iniciar o app
+if __name__ == "__main__":
+    # Garante que o catálogo de exercícios existe
+    print("Verificando banco de dados...")
+    inicializar_catalogo()
+
+    # Inicia o app
+    ft.app(target=main, assets_dir='assets')
