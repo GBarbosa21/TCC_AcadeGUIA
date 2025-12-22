@@ -1,3 +1,4 @@
+# Ajuste de importação para rodar a partir da pasta src ou raiz
 try:
     from database.config import SessionLocal
     from database.models import CatalogoExercicio
@@ -10,7 +11,7 @@ class ExerciciosSalvosController:
     @staticmethod
     def buscar_apenas_salvos(grupo=None, termo=None):
         """
-        Retorna apenas os exercícios marcados como FAVORITOS.
+        Retorna apenas os exercícios marcados como FAVORITOS (favorito=True).
         Suporta filtros de grupo e texto.
         """
         db = SessionLocal()
