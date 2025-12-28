@@ -1,5 +1,11 @@
-from src.database.config import SessionLocal
-from src.database.models import Serie
+# Ajuste de importação para rodar a partir da pasta src ou raiz
+try:
+    from database.config import SessionLocal
+    from database.models import Serie
+except ImportError:
+    # Fallback caso esteja rodando de fora da pasta src
+    from src.database.config import SessionLocal
+    from src.database.models import Serie
 
 class SerieController:
     @staticmethod

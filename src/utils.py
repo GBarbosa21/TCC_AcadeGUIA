@@ -2,13 +2,24 @@
 import flet as ft
 
 # Importa as suas funções de view originais
-from src.views.inicio import inicio
-from src.views.Minhas_series import minhas_series
-from src.views.serie import serie
-from src.views.exercicios import exercicio_info
-from src.views.exercicios_salvos import exercicios_salvos_info
-from src.views.selecionar_exercicios import selecionar_exercicios
-from src.views.detalhes_exercicios import detalhes_exercicio
+try:
+    # Forma 1: Executando de dentro de src (sem prefixo)
+    from views.inicio import inicio
+    from views.Minhas_series import minhas_series
+    from views.serie import serie
+    from views.exercicios import exercicio_info
+    from views.selecionar_exercicios import selecionar_exercicios
+    from views.exercicios_salvos import exercicios_salvos_info
+    from views.detalhes_exercicios import detalhes_exercicio
+except ImportError:
+    # Forma 2: Executando da raiz do projeto (com prefixo src.)
+    from src.views.inicio import inicio
+    from src.views.Minhas_series import minhas_series
+    from src.views.serie import serie
+    from src.views.exercicios import exercicio_info
+    from src.views.selecionar_exercicios import selecionar_exercicios
+    from src.views.exercicios_salvos import exercicios_salvos_info
+    from src.views.detalhes_exercicios import detalhes_exercicio
 
 
 def route_change(page: ft.Page):

@@ -1,15 +1,23 @@
-# inicio.py
 import flet as ft
-from ..funcoes import layout_com_header_fixado, nav_bar, botao_menu_principal
-from ..Styles import EstiloTxt
 
+# Tratamento de importações
+try:
+    from funcoes import layout_com_header_fixado, nav_bar, botao_menu_principal
+    from Styles import EstiloTxt
+except ImportError:
+    from src.funcoes import layout_com_header_fixado, nav_bar, botao_menu_principal
+    from src.Styles import EstiloTxt
 
 def inicio(page: ft.Page):
     """Constrói a View da página inicial."""
 
     conteudo = [
         ft.Image(
-            src='assets/AcadeGUIA.png', fit=ft.ImageFit.CONTAIN, height=240
+            # CORRIGIDO: Removemos 'assets/' do caminho.
+            # O Flet já sabe que está na pasta assets.
+            src='AcadeGUIA.png',
+            fit=ft.ImageFit.CONTAIN,
+            height=240
         ),
         # Container para garantir o alinhamento e espaçamento corretos
         ft.Container(
@@ -18,21 +26,20 @@ def inicio(page: ft.Page):
             content=ft.Column(
                 spacing=15,
                 controls=[
-                    # MUDANÇA: Usando a nova função para criar botões com o estilo do protótipo
                     botao_menu_principal(
                         texto='Minhas Séries',
-                        icone=ft.icons.ARCHIVE_OUTLINED,
+                        icone=ft.Icons.ARCHIVE_OUTLINED,
                         on_click=lambda e: e.page.go('/minhas_series'),
                     ),
                     botao_menu_principal(
                         texto='Exercícios',
-                        icone=ft.icons.FITNESS_CENTER,
+                        icone=ft.Icons.FITNESS_CENTER,
                         on_click=lambda e: e.page.go('/exercicios'),
                     ),
                     botao_menu_principal(
                         texto='Exercícios Salvos',
-                        icone=ft.icons.BOOKMARK_BORDER,
-                        on_click=lambda e: e.page.go('/exercicios_salvos'),
+                        icone=ft.Icons.BOOKMARK_BORDER,
+                        on_click=lambda e: e.page.go('/exercicios_salvos')
                     ),
                 ],
             ),
@@ -40,5 +47,8 @@ def inicio(page: ft.Page):
     ]
 
     return layout_com_header_fixado(
-        page, 'ACADEGUIA', conteudo, bottom=nav_bar(page, selected_index=1)
+        page,
+        'ACADEGUIA',
+        conteudo,
+        bottom=nav_bar(page, selected_index=1)
     )

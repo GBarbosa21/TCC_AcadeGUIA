@@ -14,11 +14,9 @@ def exercicios_salvos_info(page: ft.Page):
     estado_atual = {"filtro_grupo": None, "busca_texto": None}
     lista_exercicios = ft.Column(spacing=20)
 
-    # --- Função Principal ---
     def carregar_lista():
         lista_exercicios.controls.clear()
 
-        # BUSCA APENAS SALVOS
         dados = ExerciciosSalvosController.buscar_apenas_salvos(
             grupo=estado_atual["filtro_grupo"],
             termo=estado_atual["busca_texto"]
@@ -27,7 +25,7 @@ def exercicios_salvos_info(page: ft.Page):
         if not dados:
             lista_exercicios.controls.append(
                 ft.Container(padding=40, alignment=ft.alignment.center,
-                             content=ft.Text("Nenhum exercício salvo ainda.", color=ft.colors.GREY_500, size=16,
+                             content=ft.Text("Nenhum exercício salvo ainda.", color=ft.Colors.GREY_500, size=16,
                                              text_align=ft.TextAlign.CENTER))
             )
         else:
@@ -36,18 +34,18 @@ def exercicios_salvos_info(page: ft.Page):
                     page.session.set("exercicio_atual", nome)
                     page.go('/detalhes_exercicio')
 
-                # AÇÃO DE REMOVER
                 def remover_favorito(e, nome=ex.nome):
                     ExerciciosSalvosController.alternar_status_favorito(nome)
-                    carregar_lista()  # Atualiza a tela imediatamente (remove o card)
-
-                    page.snack_bar = ft.SnackBar(content=ft.Text(f"{nome} removido!"))
+                    carregar_lista()
+                    page.snack_bar = ft.SnackBar(content=ft.Text(f"{nome} removido!", color=ft.Colors.WHITE),
+                                                 bgcolor=ft.Colors.GREY_900)
                     page.snack_bar.open = True
                     page.update()
 
-                # Usa o card de "salvos" (com ícone de lixeira/remover)
+                # --- MUDANÇA AQUI: Passando o grupo muscular para o ícone correto ---
                 card = btn_info_exercicio_salvos(
                     nome_exercicio=ex.nome,
+                    grupo_muscular=ex.grupo_muscular,  # <--- ÍCONE DINÂMICO
                     on_click=ir_para_detalhes,
                     on_Play=ir_para_detalhes,
                     on_Delete=remover_favorito
@@ -56,7 +54,7 @@ def exercicios_salvos_info(page: ft.Page):
 
         page.update()
 
-    # --- Filtros e Busca (Igual, mas filtra dentro dos salvos) ---
+    # --- Filtros e Busca (Código Padrão) ---
     categorias = ["Perna", "Ombro", "Braço", "Costas", "Peito"]
     botoes_filtro_refs = []
 
@@ -64,24 +62,24 @@ def exercicios_salvos_info(page: ft.Page):
         btn = e.control
         if estado_atual["filtro_grupo"] == btn.text:
             estado_atual["filtro_grupo"] = None
-            btn.style.bgcolor = ft.colors.GREY_900
+            btn.style.bgcolor = ft.Colors.GREY_900
             btn.style.color = "#A6A6F6"
             btn.data["selecionado"] = False
         else:
             for b in botoes_filtro_refs:
-                b.style.bgcolor = ft.colors.GREY_900
+                b.style.bgcolor = ft.Colors.GREY_900
                 b.style.color = "#A6A6F6"
                 b.data["selecionado"] = False
             estado_atual["filtro_grupo"] = btn.text
             btn.style.bgcolor = "#A6A6F6"
-            btn.style.color = ft.colors.BLACK
+            btn.style.color = ft.Colors.BLACK
             btn.data["selecionado"] = True
         carregar_lista()
 
     scroll_filtros = ft.Row(scroll=ft.ScrollMode.HIDDEN, spacing=10)
     for cat in categorias:
         btn = ft.ElevatedButton(text=cat, data={"selecionado": False},
-                                style=ft.ButtonStyle(bgcolor=ft.colors.GREY_900, color="#A6A6F6",
+                                style=ft.ButtonStyle(bgcolor=ft.Colors.GREY_900, color="#A6A6F6",
                                                      shape=ft.RoundedRectangleBorder(radius=8),
                                                      padding=ft.Padding(20, 10, 20, 10)),
                                 on_click=filtrar_por_grupo)
@@ -89,7 +87,7 @@ def exercicios_salvos_info(page: ft.Page):
         scroll_filtros.controls.append(btn)
 
     txt_busca = ft.TextField(hint_text="Buscar nos salvos...", expand=True, height=45, text_style=ft.TextStyle(size=16),
-                             content_padding=ft.Padding(15, 0, 15, 0), bgcolor=ft.colors.GREY_900, border_radius=8,
+                             content_padding=ft.Padding(15, 0, 15, 0), bgcolor=ft.Colors.GREY_900, border_radius=8,
                              on_change=lambda e: atualizar_busca(e.control.value))
 
     def atualizar_busca(texto):

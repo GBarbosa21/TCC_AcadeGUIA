@@ -1,52 +1,54 @@
 import flet as ft
-from funcoes import layout_com_header_fixado, nav_bar
-from controllers.catalogo_controller import CatalogoController
+
+# Tratamento de importação para rodar de 'src' ou raiz
+try:
+    from funcoes import layout_com_header_fixado, nav_bar
+    from controllers.catalogo_controller import CatalogoController
+except ImportError:
+    from src.funcoes import layout_com_header_fixado, nav_bar
+    from src.controllers.catalogo_controller import CatalogoController
 
 
 def detalhes_exercicio(page: ft.Page):
     # 1. Recupera o nome do exercício salvo na sessão
     nome_exercicio = page.session.get("exercicio_atual") or "Exercício"
 
-    # 2. Busca os dados reais no Banco de Dados
+    # 2. Busca os detalhes RICOS no Banco de Dados
     exercicio_db = CatalogoController.buscar_por_nome(nome_exercicio)
 
-    # 3. Define as variáveis com base nas colunas exatas da tabela
+    # 3. Define valores padrão com base nos dados do banco
     if exercicio_db:
-        tipo = exercicio_db.tipo or "Geral"
-        alvo = exercicio_db.musculo_alvo or "Geral"
-
-        # Mapeamento direto das 3 colunas do banco
-        dica1 = exercicio_db.dica_preparacao or "Posicione-se corretamente."
-        dica2 = exercicio_db.dica_excentrica or "Controle a descida."
-        dica3 = exercicio_db.dica_concentrica or "Faça força mantendo a postura."
+        tipo_exercicio = exercicio_db.tipo or "Geral"
+        musculo_alvo = exercicio_db.musculo_alvo or "Geral"
+        dica1 = exercicio_db.dica_preparacao or "Posicione-se corretamente no equipamento."
+        dica2 = exercicio_db.dica_excentrica or "Execute o movimento de descida controlada."
+        dica3 = exercicio_db.dica_concentrica or "Realize a força mantendo a postura."
     else:
-        # Fallback padrão (apenas 3 dicas)
-        tipo = "Personalizado"
-        alvo = "Geral"
-        dica1 = "Posicione-se corretamente no equipamento ou banco."
-        dica2 = "Mantenha a postura firme e o abdômen contraído."
-        dica3 = "Execute o movimento de forma controlada."
+        # Fallback
+        tipo_exercicio = "Customizado"
+        musculo_alvo = "Geral"
+        dica1 = "Prepare-se para o exercício."
+        dica2 = "Execute o movimento com atenção."
+        dica3 = "Respire durante a execução."
 
     # --- Conteúdo da Tela ---
     conteudo = [
         # 1. Área Visual (Imagem/Vídeo)
         ft.Container(
             height=250,
-            bgcolor=ft.colors.BLACK,
+            bgcolor=ft.Colors.BLACK,  # Usando ft.Colors correto
             border_radius=12,
             alignment=ft.alignment.center,
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
             content=ft.Stack(
                 alignment=ft.alignment.center,
                 controls=[
-                    # Imagem dinâmica
                     ft.Image(
                         src=f"https://placehold.co/600x400/1a1a1a/A6A6F6/png?text={nome_exercicio.replace(' ', '+')}",
                         fit=ft.ImageFit.COVER,
                         opacity=0.6,
                         width=1000,
                     ),
-                    # Ícone de Play
                     ft.Icon(
                         name=ft.Icons.PLAY_CIRCLE_FILL,
                         size=80,
@@ -56,47 +58,41 @@ def detalhes_exercicio(page: ft.Page):
             ),
         ),
 
-        # 2. Cabeçalho com Título e Tipo
+        # 2. Cabeçalho de Instruções + Tag de Tipo
         ft.Row(
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             controls=[
                 ft.Text(
-                    "Instruções de Execução",
+                    "Instruções",
                     size=22,
                     weight=ft.FontWeight.BOLD,
                     color="#A6A6F6"
                 ),
-                # Tag com o Tipo
                 ft.Container(
                     padding=ft.Padding(10, 5, 10, 5),
-                    bgcolor=ft.colors.BLUE_GREY_900,
+                    bgcolor=ft.Colors.BLUE_GREY_900,
                     border_radius=8,
-                    content=ft.Text(tipo.upper(), size=12, color="white", weight=ft.FontWeight.BOLD)
+                    content=ft.Text(str(tipo_exercicio).upper(), size=12, color="white", weight=ft.FontWeight.BOLD)
                 )
             ]
         ),
 
-        # 3. Bloco de Texto com as 3 Dicas do Banco
+        # 3. Bloco de Texto com os Passos
         ft.Container(
             padding=20,
-            bgcolor=ft.colors.GREY_900,
+            bgcolor=ft.Colors.GREY_900,
             border_radius=12,
             content=ft.Column(
                 spacing=15,
                 controls=[
-                    # Dica 1: Preparação
                     ft.Column(spacing=2, controls=[
                         ft.Text("1. Preparação", weight=ft.FontWeight.BOLD, color="#A6A6F6"),
                         ft.Text(dica1, size=16, color="#F1F1F1"),
                     ]),
-
-                    # Dica 2: Fase Excêntrica
                     ft.Column(spacing=2, controls=[
                         ft.Text("2. Fase Excêntrica (Volta)", weight=ft.FontWeight.BOLD, color="#A6A6F6"),
                         ft.Text(dica2, size=16, color="#F1F1F1"),
                     ]),
-
-                    # Dica 3: Fase Concêntrica
                     ft.Column(spacing=2, controls=[
                         ft.Text("3. Fase Concêntrica (Força)", weight=ft.FontWeight.BOLD, color="#A6A6F6"),
                         ft.Text(dica3, size=16, color="#F1F1F1"),
@@ -105,17 +101,16 @@ def detalhes_exercicio(page: ft.Page):
             )
         ),
 
-        # 4. Tags de Músculos
-        ft.Text("Músculo Alvo", size=18, weight=ft.FontWeight.BOLD, color="#A6A6F6"),
+        # 4. Músculo Alvo
+        ft.Text("Foco Muscular", size=18, weight=ft.FontWeight.BOLD, color="#A6A6F6"),
 
         ft.Row(
-            spacing=10,
             controls=[
                 ft.Container(
                     padding=ft.Padding(15, 8, 15, 8),
-                    bgcolor="#A6A6F6",  # Destaque para o músculo principal
+                    bgcolor="#A6A6F6",
                     border_radius=20,
-                    content=ft.Text(alvo, color="black", weight=ft.FontWeight.BOLD)
+                    content=ft.Text(musculo_alvo, color="black", weight=ft.FontWeight.BOLD)
                 ),
             ]
         )
